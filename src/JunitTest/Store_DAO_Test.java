@@ -37,12 +37,13 @@ public class Store_DAO_Test {
 	@Test // 책 입고
 	public void insertOne() {
 		Store_DTO sDto = new Store_DTO();
-		sDto.setNo(3);
-		sDto.setBookname("백설공주");
-		sDto.setBprice(4900);
+		sDto.setNo(2);
+		sDto.setBookname("콩쥐 팥쥐");
+		sDto.setBprice(5900);
 		sDto.setBwriter("미상");
-		sDto.setBcnt(3);
+		sDto.setBcnt(5);
 		sdao.insertOne(sDto);
+		selectTest();
 	}
 
 	@Test // 책 수량 -
@@ -81,7 +82,7 @@ public class Store_DAO_Test {
 	}
 	@Test //번호로 찾기
 	public void selectOne() {
-		ArrayList<Store_DTO> sDto = sdao.selectList(2);
+		ArrayList<Store_DTO> sDto = sdao.selectList();
 		for (int i = 0; i < sDto.size(); i++) {
 			System.out.println("==================");
 			System.out.println(sDto.get(i).getNo());

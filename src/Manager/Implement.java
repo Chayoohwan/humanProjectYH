@@ -1,18 +1,13 @@
 package Manager;
-
 import java.util.Scanner;
-
 import javax.sql.rowset.serial.SerialArray;
-
 import DBInterface.DBinterface_Imple;
-
 public class Implement {
 	DBinterface_Imple serv=new DBinterface_Imple();
-
 	public Implement() {
 		Scanner in = new Scanner(System.in);
 		while(true) {
-			System.out.println("++휴먼문구에 오신걸 환영합니다.++");
+			System.out.println("++휴먼도서관에 오신걸 환영합니다.++");
 			menu();
 			int key = in.nextInt();
 			in.nextLine();
@@ -21,14 +16,15 @@ public class Implement {
 			case 2:give();	break;
 			case 3:Third(); break;
 			case 4: break;
+			case 5: serv.addBook(key, null, key, null, key); break;
+			case 6: serv.brList(); break;
 			default: System.out.println("잘못된 번호입니다.");
 			}
 			if(key==4) break;
 		}
 	}
-
 	private void list() {
-		serv.buy();
+		serv.rent();
 	}
 	private void give() {
 		serv.list();

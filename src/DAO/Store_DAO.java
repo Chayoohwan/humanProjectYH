@@ -40,9 +40,9 @@ public class Store_DAO {
 		return null;
 	}
 
-	// 등록된 책 전체보기
+	// 도서관에 등록된 책 전체보기
 	public ArrayList<Store_DTO> selectAll() {
-		String sql = "select * from hmstore";
+		String sql = "select * from hmstore order by no asc";
 		Statement stt = null;
 		ArrayList<Store_DTO> sDto = new ArrayList<>();
 		if (conn() != null) {
@@ -77,7 +77,7 @@ public class Store_DAO {
 		return sDto;
 	}
 
-	// 책 등록하기
+	//도서관에  책 등록하기
 	public void insertOne(Store_DTO sdto) {
 		String sql = "insert into hmstore values(?,?,?,?,?)";
 		if (conn() != null) {
@@ -106,7 +106,7 @@ public class Store_DAO {
 
 	}
 
-	// 재고 수량-
+	// 대여를 하면 재고 수량-
 	public void updateOne(int cnt, int no) {
 		String sql = "update hmstore set bcnt=bcnt-? where no=?";
 		PreparedStatement ppst = null;
@@ -130,7 +130,7 @@ public class Store_DAO {
 		}
 	}
 
-	// 재고 수량 +
+	// 도서관에 입고 할때 사용 재고 수량 +
 	public void updatetwo(int cnt, int no) {
 		String sql = "update hmstore set bcnt=bcnt+? where no=?";
 		PreparedStatement ppst = null;
@@ -179,21 +179,17 @@ public class Store_DAO {
 		}
 	}
 	//번호로 정보찾기 
-	public ArrayList<Store_DTO> selectList(int no) {
-		String sql = "select * from hmstore where no= ?";
-		PreparedStatement ppst = null;
+	public ArrayList<Store_DTO> selectList() {
+		String sql = "select bookname,bcnt from hmstore where bcnt>0 order by no asc";
+		Statement stt = null;
 		ArrayList<Store_DTO> sDto = new ArrayList<>();
 		if (conn() != null) {
 			try {
-				ppst = conn.prepareStatement(sql);
-				ppst.setInt(1, no);
-				rs = ppst.executeQuery();
+				stt=conn.createStatement();
+				rs = stt.executeQuery(sql);
 				while (rs.next()) {
 					Store_DTO sdto = new Store_DTO();
-					sdto.setNo(rs.getInt("no"));
 					sdto.setBookname(rs.getString("bookname"));
-					sdto.setBprice(rs.getInt("bprice"));
-					sdto.setBwriter(rs.getString("bwriter"));
 					sdto.setBcnt(rs.getInt("bcnt"));
 					sDto.add(sdto);
 				}
@@ -204,8 +200,8 @@ public class Store_DAO {
 				// TODO: handle exception
 			} finally {
 				try {
-					if (ppst != null)
-						ppst.close();
+					if (stt != null)
+						stt.close();
 					if (conn != null)
 						conn.close();
 				} catch (Exception e2) {

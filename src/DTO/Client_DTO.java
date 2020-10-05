@@ -2,8 +2,8 @@ package DTO;
 
 public class Client_DTO {
 	private String id;	//고객 아이디
-	private int cnt;	//구매수량
-	private int no; //구매한 책번호
+	private int cnt;	//대여수량
+	private int no; //대여한 책번호
 	public String getId() {
 		return id;
 	}
